@@ -33,7 +33,7 @@ go get -v github.com/the-web-bricks/rain
 
 - [X] Base Generation Algorithm
 
-- [ ] 100% unit test and heavy test
+- [X] 100% unit test and heavy test
 
 - [ ] Standalone Installation
 
