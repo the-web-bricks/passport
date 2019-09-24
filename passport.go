@@ -1,4 +1,4 @@
-package rain
+package passport
 
 import (
 	"math"
@@ -22,13 +22,24 @@ type NodeConfig struct {
 	CounterLimit int64
 }
 
-// Rain Rain Unique IDs
-type Rain struct {
+func main() {
+	r := PreRun()
+	r.Next()
+	r.Next()
+	r.Next()
+	r.Next()
+	r.Next()
+	r.Next()
+	r.Next()
+}
+
+// Passport Passport Unique IDs
+type Passport struct {
 	config *NodeConfig
 }
 
-// PreRun Create and configure the Rain
-func PreRun() Rain {
+// PreRun Create and configure the Passport
+func PreRun() Passport {
 	node, _ := strconv.ParseInt(os.Getenv("NODE_ID"), 10, 64)
 	limit := int64(math.Pow(2, localCounterIDLength) - 1)
 
@@ -37,12 +48,12 @@ func PreRun() Rain {
 	}
 
 	Config := NodeConfig{NodeID: node, Counter: 1, CounterLimit: limit}
-	return Rain{config: &Config}
+	return Passport{config: &Config}
 
 }
 
 // Next generates a the next unique ID
-func (r *Rain) Next() int64 {
+func (r *Passport) Next() int64 {
 
 	r.config.ValidateCounter()
 	nodeID, counter := r.config.NodeID, r.config.Counter

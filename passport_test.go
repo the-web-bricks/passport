@@ -1,6 +1,8 @@
-package rain
+package passport
 
-import "testing"
+import (
+	"testing"
+)
 
 func BenchmarkRun(b *testing.B) {
 	r := PreRun()
@@ -12,7 +14,7 @@ func BenchmarkRun(b *testing.B) {
 func TestRun(t *testing.T) {
 	r := PreRun()
 	current := r.Next()
-	for n := 0; n < 1000; n++ {
+	for n := 0; n < 10; n++ {
 		new := r.Next()
 		if new <= current {
 			t.Errorf("New ID is equal or less than current id, current: %d, new : %d, iteration : %d ", current, new, n)
