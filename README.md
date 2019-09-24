@@ -31,7 +31,7 @@ go get -v github.com/the-web-bricks/rain
 
 ## Features
 
-- [ ] Base Generation Algorithm
+- [X] Base Generation Algorithm
 
 - [ ] 100% unit test and heavy test
 
