@@ -2,11 +2,7 @@ package passport
 
 import (
 	"math"
-	"os"
-	"strconv"
 	"time"
-
-	_ "github.com/joho/godotenv/autoload"
 )
 
 const (
@@ -14,23 +10,15 @@ const (
 	timestampLength      = 40
 	nodeIDLength         = 12
 	localCounterIDLength = 12
+	// SingleNodeMode use when running SingleNodeMode in one machine
+	SingleNodeMode = 0
 )
 
+// NodeConfig holds information about the current node running the service
 type NodeConfig struct {
 	NodeID       int64
 	Counter      int64
 	CounterLimit int64
-}
-
-func main() {
-	r := PreRun()
-	r.Next()
-	r.Next()
-	r.Next()
-	r.Next()
-	r.Next()
-	r.Next()
-	r.Next()
 }
 
 // Passport Passport Unique IDs
@@ -39,21 +27,20 @@ type Passport struct {
 }
 
 // PreRun Create and configure the Passport
-func PreRun() Passport {
-	node, _ := strconv.ParseInt(os.Getenv("NODE_ID"), 10, 64)
+func PreRun(nodeID int64) Passport {
 	limit := int64(math.Pow(2, localCounterIDLength) - 1)
 
-	if node >= int64(math.Pow(2, nodeIDLength)-1) {
+	if nodeID >= int64(math.Pow(2, nodeIDLength)-1) {
 		panic("Node ID exceeded the maximum length. Choose something less than %d")
 	}
 
-	Config := NodeConfig{NodeID: node, Counter: 1, CounterLimit: limit}
+	Config := NodeConfig{NodeID: nodeID, Counter: 1, CounterLimit: limit}
 	return Passport{config: &Config}
 
 }
 
-// Next generates a the next unique ID
-func (r *Passport) Next() int64 {
+// ID generates a the next unique ID
+func (r *Passport) ID() int64 {
 
 	r.config.ValidateCounter()
 	nodeID, counter := r.config.NodeID, r.config.Counter

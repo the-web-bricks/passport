@@ -5,17 +5,17 @@ import (
 )
 
 func BenchmarkRun(b *testing.B) {
-	r := PreRun()
+	passport := PreRun(defaultNodeIDs)
 	for n := 0; n < b.N; n++ {
-		r.Next()
+		r.ID()
 	}
 }
 
 func TestRun(t *testing.T) {
-	r := PreRun()
-	current := r.Next()
+	p := PreRun(defaultNodeID)
+	current := p.ID()
 	for n := 0; n < 10; n++ {
-		new := r.Next()
+		new := p.ID()
 		if new <= current {
 			t.Errorf("New ID is equal or less than current id, current: %d, new : %d, iteration : %d ", current, new, n)
 		}
